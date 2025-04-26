@@ -2,7 +2,10 @@
 
 KiCAD MCP is a Model Context Protocol (MCP) implementation that enables Large Language Models (LLMs) like Claude to directly interact with KiCAD for printed circuit board design. It creates a standardized communication bridge between AI assistants and the KiCAD PCB design software, allowing for natural language control of advanced PCB design operations.
 
-## Project Status
+# Also, Google-Search-MCP is here, can perform Google searches, an view pages:
+https://github.com/mixelpixx/Google-Search-MCP-Server
+
+## KiCAD MCP Project Status
 
 
 - Implemented full Python interface compatibility with KiCAD 9.0
