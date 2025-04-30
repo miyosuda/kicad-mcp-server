@@ -10,6 +10,7 @@ import { existsSync } from 'fs';
 // import { registerDesignRuleTools } from './tools/design-rules.js';
 // import { registerExportTools } from './tools/export.js';
 // import { registerProjectTools } from './tools/project.js';
+// import { registerSchematicTools } from './tools/schematic.js';
 class KiCADServer {
     constructor() {
         this.pythonProcess = null;
@@ -156,6 +157,108 @@ class KiCADServer {
                             net: { type: 'string', description: 'Net name' }
                         },
                         required: ['start', 'end']
+                    }
+                },
+                // Schematic tools
+                {
+                    name: 'create_schematic',
+                    description: 'Create a new KiCAD schematic',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            projectName: { type: 'string', description: 'Name of the schematic project' },
+                            path: { type: 'string', description: 'Path where to create the schematic file' },
+                            metadata: { type: 'object', description: 'Optional metadata for the schematic' }
+                        },
+                        required: ['projectName']
+                    }
+                },
+                {
+                    name: 'load_schematic',
+                    description: 'Load an existing KiCAD schematic',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            filename: { type: 'string', description: 'Path to the schematic file to load' }
+                        },
+                        required: ['filename']
+                    }
+                },
+                {
+                    name: 'add_schematic_component',
+                    description: 'Add a component to a KiCAD schematic',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            schematicPath: { type: 'string', description: 'Path to the schematic file' },
+                            component: {
+                                type: 'object',
+                                description: 'Component definition',
+                                properties: {
+                                    type: { type: 'string', description: 'Component type (e.g., R, C, LED)' },
+                                    reference: { type: 'string', description: 'Reference designator (e.g., R1, C2)' },
+                                    value: { type: 'string', description: 'Component value (e.g., 10k, 0.1uF)' },
+                                    library: { type: 'string', description: 'Symbol library name' },
+                                    x: { type: 'number', description: 'X position in schematic' },
+                                    y: { type: 'number', description: 'Y position in schematic' },
+                                    rotation: { type: 'number', description: 'Rotation angle in degrees' },
+                                    properties: { type: 'object', description: 'Additional properties' }
+                                },
+                                required: ['type', 'reference']
+                            }
+                        },
+                        required: ['schematicPath', 'component']
+                    }
+                },
+                {
+                    name: 'add_schematic_wire',
+                    description: 'Add a wire connection to a KiCAD schematic',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            schematicPath: { type: 'string', description: 'Path to the schematic file' },
+                            startPoint: {
+                                type: 'array',
+                                description: 'Starting point coordinates [x, y]',
+                                items: { type: 'number' },
+                                minItems: 2,
+                                maxItems: 2
+                            },
+                            endPoint: {
+                                type: 'array',
+                                description: 'Ending point coordinates [x, y]',
+                                items: { type: 'number' },
+                                minItems: 2,
+                                maxItems: 2
+                            }
+                        },
+                        required: ['schematicPath', 'startPoint', 'endPoint']
+                    }
+                },
+                {
+                    name: 'list_schematic_libraries',
+                    description: 'List available KiCAD symbol libraries',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            searchPaths: {
+                                type: 'array',
+                                description: 'Optional search paths for libraries',
+                                items: { type: 'string' }
+                            }
+                        }
+                    }
+                },
+                {
+                    name: 'export_schematic_pdf',
+                    description: 'Export a KiCAD schematic to PDF',
+                    inputSchema: {
+                        type: 'object',
+                        properties: {
+                            schematicPath: { type: 'string', description: 'Path to the schematic file' },
+                            outputPath: { type: 'string', description: 'Path for the output PDF file' }
+                        },
+                        required: ['schematicPath', 'outputPath']
                     }
                 }
             ]

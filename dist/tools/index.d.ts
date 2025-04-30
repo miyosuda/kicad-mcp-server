@@ -9,3 +9,4 @@ export { registerComponentTools } from './component.js';
 export { registerRoutingTools } from './routing.js';
 export { registerDesignRuleTools } from './design-rules.js';
 export { registerExportTools } from './export.js';
+export { registerSchematicTools } from './schematic.js';
