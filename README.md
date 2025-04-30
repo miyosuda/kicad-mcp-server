@@ -2,11 +2,21 @@
 
 KiCAD MCP is a Model Context Protocol (MCP) implementation that enables Large Language Models (LLMs) like Claude to directly interact with KiCAD for printed circuit board design. It creates a standardized communication bridge between AI assistants and the KiCAD PCB design software, allowing for natural language control of advanced PCB design operations.
 
-## Also, the Google-Search-MCP is here, it can perform Google searches and view pages:
-https://github.com/mixelpixx/Google-Search-MCP-Server
+## 🎉 NEW FEATURE! Schematic Generation
 
-## KiCAD MCP Project Status
+**We're excited to announce the addition of schematic generation capabilities!** Now, in addition to PCB design, KiCAD MCP enables AI assistants to:
 
+- Create and manage KiCAD schematics through natural language
+- Add components like resistors, capacitors, and ICs to schematics
+- Connect components with wires to create complete circuits
+- Save and load schematic files in KiCAD format
+- Export schematics to PDF
+
+This powerful addition completes the PCB design workflow, allowing AI assistants to help with both schematic capture and PCB layout in a single integrated environment.
+
+## Project Status
+
+This project is complete and ready for production use. We've successfully:
 
 - Implemented full Python interface compatibility with KiCAD 9.0
 - Created a modular and maintainable component architecture
@@ -21,6 +31,7 @@ The server works seamlessly with Cline/Claude, enabling AI-assisted PCB design t
 KiCAD MCP transforms how engineers and designers work with KiCAD by enabling AI assistants to:
 
 - Create and manage KiCAD PCB projects through natural language requests
+- **Create schematics** with components and connections
 - Manipulate board geometry, outlines, layers, and properties
 - Place and organize components in various patterns (grid, circular, aligned)
 - Route traces, differential pairs, and create copper pours
@@ -33,8 +44,8 @@ This enables a natural language-driven PCB design workflow where complex operati
 ## Core Architecture
 
 - **TypeScript MCP Server**: Implements the Anthropic Model Context Protocol specification to communicate with Claude and other compatible AI assistants
-- **Python KiCAD Interface**: Handles actual KiCAD operations via pcbnew Python API with comprehensive error handling
-- **Modular Design**: Organizes functionality by domains (project, board, component, routing) for maintainability and extensibility
+- **Python KiCAD Interface**: Handles actual KiCAD operations via pcbnew Python API and kicad-skip library with comprehensive error handling
+- **Modular Design**: Organizes functionality by domains (project, schematic, board, component, routing) for maintainability and extensibility
 
 ## System Requirements
 
@@ -115,6 +126,20 @@ Create a new KiCAD project named 'WiFiModule' in my Documents folder.
 Open the existing KiCAD project at C:/Projects/Amplifier/Amplifier.kicad_pro
 ```
 
+### Schematic Design
+
+```
+Create a new schematic named 'PowerSupply'.
+```
+
+```
+Add a 10kΩ resistor and 0.1µF capacitor to the schematic.
+```
+
+```
+Connect the resistor's pin 1 to the capacitor's pin 1.
+```
+
 ### Board Design
 
 ```
@@ -175,6 +200,14 @@ Export Gerber files to the 'fabrication' directory.
 - Save projects with optional new locations
 - Retrieve project metadata and properties
 
+### Schematic Design
+- Create new schematics with customizable settings
+- Add components from symbol libraries (resistors, capacitors, ICs, etc.)
+- Connect components with wires to create circuits
+- Add labels, annotations, and documentation to schematics
+- Save and load schematics in KiCAD format
+- Export schematics to PDF for documentation
+
 ### Board Design
 - Set precise board dimensions with support for metric and imperial units
 - Add custom board outlines (rectangle, rounded rectangle, circle, polygon)
@@ -230,12 +263,16 @@ The KiCAD MCP implementation uses a modular, maintainable architecture:
 
 - **Modular Command Structure**:
   - `commands/project.py`: Project creation, opening, saving
+  - `commands/schematic.py`: Schematic creation and management
+  - `commands/component_schematic.py`: Schematic component operations
+  - `commands/connection_schematic.py`: Wire and connection management
+  - `commands/library_schematic.py`: Symbol library integration
   - `commands/board/`: Modular board manipulation functions
     - `size.py`: Board size operations
     - `layers.py`: Layer management
     - `outline.py`: Board outline creation
     - `view.py`: Visualization functions
-  - `commands/component.py`: Component placement and manipulation
+  - `commands/component.py`: PCB component placement and manipulation
   - `commands/routing.py`: Trace routing and net management
   - `commands/design_rules.py`: DRC and rule configuration
   - `commands/export.py`: Output generation in various formats
