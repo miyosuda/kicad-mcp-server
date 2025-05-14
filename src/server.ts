@@ -108,15 +108,25 @@ export class KiCADMcpServer {
       
       // Start the Python process for KiCAD scripting
       logger.info(`Starting Python process with script: ${this.kicadScriptPath}`);
-      const pythonExe = process.env.PYTHONPATH ? 
-        'C:\\Program Files\\KiCad\\9.0\\bin\\python.exe' : 'python';
+
+      const pythonExeWin = 'C:\\Program Files\\KiCad\\9.0\\bin\\python.exe';
+      const pythonPackagesWin = 'C:\\Program Files\\KiCad\\9.0\\lib\\python3\\dist-packages';
+
+      const pythonExeMac = '/Applications/KiCad/KiCad.app/Contents/Frameworks/Python.framework/Versions/3.9/bin/python3';
+      const pythonPackagesMac = '/Applications/KiCad/KiCad.app/Contents/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages';
+
+      //const pythonExe = process.env.PYTHONPATH ? 
+      //  pythonExeWin : 'python';
+
+      const pythonExe = pythonExeMac;
+      const pythonPackages = pythonPackagesMac;
       
       logger.info(`Using Python executable: ${pythonExe}`);
       this.pythonProcess = spawn(pythonExe, [this.kicadScriptPath], {
         stdio: ['pipe', 'pipe', 'pipe'],
         env: {
           ...process.env,
-          PYTHONPATH: process.env.PYTHONPATH || 'C:/Program Files/KiCad/9.0/lib/python3/dist-packages'
+          PYTHONPATH: process.env.PYTHONPATH || pythonPackages
         }
       });
       
