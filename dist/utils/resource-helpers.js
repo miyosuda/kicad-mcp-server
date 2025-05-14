@@ -45,7 +45,7 @@ export function createResource(server, name, uri, callback) {
         const response = await callback(uri);
         return {
             ...response,
-            contents: response.contents.map(content => ({
+            contents: response.contents.map((content) => ({
                 ...content,
                 [content.hasOwnProperty('blob') ? 'blob' : 'text']: content.hasOwnProperty('blob') ? content.blob : content.text
             }))

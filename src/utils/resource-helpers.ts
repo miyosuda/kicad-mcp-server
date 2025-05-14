@@ -1,7 +1,29 @@
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+
+interface ResourceContentItem {
+    [key: string]: unknown;
+    uri: string;
+    text: string;
+    mimeType?: string;
+}
+
+interface ResourceBinaryContentItem {
+    [key: string]: unknown;
+    uri: string;
+    blob: string;
+    mimeType?: string;
+}
+
+interface ResourceResponse {
+    [key: string]: unknown;
+    contents: Array<ResourceContentItem | ResourceBinaryContentItem>;
+    _meta?: Record<string, unknown>;
+}
+
 /**
  * Create a JSON response for a resource
  */
-export function createJsonResponse(uri: string, data: any) {
+export function createJsonResponse(uri: string, data: unknown) : ResourceResponse {
     const content = {
         uri,
         text: JSON.stringify(data),
@@ -14,7 +36,7 @@ export function createJsonResponse(uri: string, data: any) {
 /**
  * Create a text response for a resource
  */
-export function createTextResponse(uri: string, text: string) {
+export function createTextResponse(uri: string, text: string) : ResourceResponse {
     const content = {
         uri,
         text,
@@ -27,7 +49,7 @@ export function createTextResponse(uri: string, text: string) {
 /**
  * Create a binary response for a resource
  */
-export function createBinaryResponse(uri: string, data: any, mimeType: string) {
+export function createBinaryResponse(uri: string, data: string, mimeType: string) : ResourceResponse {
     const content = {
         uri,
         blob: data,
@@ -40,12 +62,12 @@ export function createBinaryResponse(uri: string, data: any, mimeType: string) {
 /**
  * Create a resource with a URI template
  */
-export function createResource(server: any, name: string, uri: string, callback: (uri: string) => Promise<any>) {
-    const readCallback = async (uri: string) => {
+export function createResource(server: McpServer, name: string, uri: string, callback: (uri: URL) => Promise<ResourceResponse>): void {
+    const readCallback = async (uri: URL) => {
         const response = await callback(uri);
         return {
             ...response,
-            contents: response.contents.map((content: any) => ({
+            contents: response.contents.map((content: ResourceContentItem | ResourceBinaryContentItem) => ({
                 ...content,
                 [content.hasOwnProperty('blob') ? 'blob' : 'text']: content.hasOwnProperty('blob') ? content.blob : content.text
             }))

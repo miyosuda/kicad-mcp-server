@@ -3,6 +3,7 @@
  *
  * These tools handle trace routing, via placement, and net management
  */
+
 import { z } from 'zod';
 import { logger } from '../logger.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
@@ -129,7 +130,7 @@ export function registerRoutingTools(server: McpServer, callKicadScript: Command
                 }]
         };
     });
-    
+
     // ------------------------------------------------------
     // Auto-Route Net Tool
     // ------------------------------------------------------

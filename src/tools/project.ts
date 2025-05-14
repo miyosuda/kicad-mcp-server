@@ -3,6 +3,7 @@
  *
  * These tools handle KiCAD project operations like creating, opening, and saving projects
  */
+
 import { z } from 'zod';
 import { logger } from '../logger.js';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';

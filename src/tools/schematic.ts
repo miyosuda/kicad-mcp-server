@@ -4,12 +4,13 @@
  * Provides tools for creating, modifying, and exporting schematics
  * using the kicad-skip library
  */
+
 import { spawn } from 'child_process';
 //import { join } from 'path';
 import { logger } from '../logger.js';
 
 // Command function type for KiCAD script calls
-type CommandFunction = (command: string, params: Record<string, unknown>) => Promise<any>;
+//type CommandFunction = (command: string, params: Record<string, unknown>) => Promise<any>;
 
 /**
  * Register all schematic-related tools with the provided MCP tool handler
@@ -18,7 +19,7 @@ type CommandFunction = (command: string, params: Record<string, unknown>) => Pro
  * @param pythonPath Path to Python interpreter
  * @param scriptBasePath Base path for Python scripts
  */
-export const registerSchematicTools = (addTool: (tool: any) => void, pythonPath: string, scriptBasePath: string, callKicadScript: CommandFunction) => {
+export const registerSchematicTools = (addTool: Function, pythonPath: string, scriptBasePath: string) => {
     //const schematicScriptsPath = join(scriptBasePath, 'commands');
 
     // Create a schematic project
