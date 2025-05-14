@@ -1,19 +1,8 @@
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 import { spawn, ChildProcess } from 'child_process';
 import { existsSync } from 'fs';
-import path from 'path';
-
-// Import all tool definitions for reference
-// import { registerBoardTools } from './tools/board.js';
-// import { registerComponentTools } from './tools/component.js';
-// import { registerRoutingTools } from './tools/routing.js';
-// import { registerDesignRuleTools } from './tools/design-rules.js';
-// import { registerExportTools } from './tools/export.js';
-// import { registerProjectTools } from './tools/project.js';
-// import { registerSchematicTools } from './tools/schematic.js';
 
 class KiCADServer {
   private server: Server;

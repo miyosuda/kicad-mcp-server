@@ -4,7 +4,6 @@
 
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import express from 'express';
 import { spawn, ChildProcess } from 'child_process';
 import { existsSync } from 'fs';
 import { logger } from './logger.js';

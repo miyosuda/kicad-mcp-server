@@ -6,11 +6,7 @@
  */
 
 import { spawn } from 'child_process';
-//import { join } from 'path';
 import { logger } from '../logger.js';
-
-// Command function type for KiCAD script calls
-//type CommandFunction = (command: string, params: Record<string, unknown>) => Promise<any>;
 
 /**
  * Register all schematic-related tools with the provided MCP tool handler
@@ -20,8 +16,6 @@ import { logger } from '../logger.js';
  * @param scriptBasePath Base path for Python scripts
  */
 export const registerSchematicTools = (addTool: Function, pythonPath: string, scriptBasePath: string) => {
-    //const schematicScriptsPath = join(scriptBasePath, 'commands');
-
     // Create a schematic project
     addTool({
         name: 'create_schematic',
