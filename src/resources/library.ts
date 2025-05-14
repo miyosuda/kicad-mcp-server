@@ -109,8 +109,8 @@ export function registerLibraryResources(server: McpServer, callKicadScript: Com
   // Component Details Resource
   // ------------------------------------------------------
   server.resource(
-    "component_details",
-    new ResourceTemplate("kicad://component/{componentId}/{library?}", {
+    "library_component_details",
+    new ResourceTemplate("kicad://library-component/{componentId}/{library?}", {
       list: undefined
     }),
     async (uri, params) => {
