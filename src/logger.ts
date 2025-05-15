@@ -16,7 +16,8 @@ const DEFAULT_LOG_DIR = join(os.homedir(), '.kicad-mcp', 'logs');
  * Logger class for KiCAD MCP server
  */
 class Logger {
-  private logLevel: LogLevel = 'info';
+  //private logLevel: LogLevel = 'info';
+  private logLevel: LogLevel = 'debug';
   private logDir: string = DEFAULT_LOG_DIR;
   
   /**
@@ -98,7 +99,7 @@ class Logger {
       case 'info':
       case 'debug':
       default:
-        console.log(formattedMessage);
+        console.warn(formattedMessage); // console.log cannot be used for STDIO transport, so we use console.error
         break;
     }
     

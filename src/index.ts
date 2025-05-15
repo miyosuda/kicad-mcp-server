@@ -19,21 +19,22 @@ const __dirname = dirname(__filename);
 async function main() {
   try {
     // Parse command line arguments
-    const args = process.argv.slice(2);
-    const options = parseCommandLineArgs(args);
-    
+    //const args = process.argv.slice(2);
+    //const options = parseCommandLineArgs(args);
+
     // Load configuration
-    const config = await loadConfig(options.configPath);
+    //const config = await loadConfig(options.configPath);
     
     // Path to the Python script that interfaces with KiCAD
     const kicadScriptPath = join(dirname(__dirname), 'python', 'kicad_interface.py');
-    
+
     // Create the server
     const server = new KiCADMcpServer(
       kicadScriptPath,
-      config.logLevel
+      //config.logLevel
+      'info'
     );
-    
+
     // Start the server
     await server.start();
     
